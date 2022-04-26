@@ -1,22 +1,28 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import CreateForm from './components/CreateForm';
+import MovieCard from './components/MovieCard';
+import getAllMovies from './services/getAllMovies';
 
 function App() {
+
+  const [movies, setMovies] = useState([])
+
+  useEffect(() => {
+    getAllMovies()
+      .then((response) => {
+        console.log(response.data)
+        setMovies(response.data)
+      })
+  }, [])
+
+  const movieList = movies.map((item) => <MovieCard movieObj={item} key={item.id} />)
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <CreateForm />
+        {movieList}
       </header>
     </div>
   );
