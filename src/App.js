@@ -20,7 +20,7 @@ function App() {
 
 
   useEffect(() => {
-    if(newMovie.name){
+    if(newMovie.name ){
       createNewMovie(newMovie)
         .then((res) => {
           console.log(res.data)
