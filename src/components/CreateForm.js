@@ -6,7 +6,6 @@ const CreateForm = ({ onCreate }) => {
 
     const onSubmit = (res) => {
         onCreate(res)
-        console.log(res)
     }
 
     return(
