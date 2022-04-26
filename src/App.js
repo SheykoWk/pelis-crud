@@ -7,6 +7,7 @@ import getAllMovies from './services/getAllMovies';
 function App() {
 
   const [movies, setMovies] = useState([])
+  const [newMovie, setNewMovie] = useState({})
 
   useEffect(() => {
     getAllMovies()
@@ -18,10 +19,14 @@ function App() {
 
   const movieList = movies.map((item) => <MovieCard movieObj={item} key={item.id} />)
 
+  const handlerOnCreateMovie = (event) => {
+    setNewMovie(event)
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <CreateForm />
+        <CreateForm onCreate={handlerOnCreateMovie} />
         {movieList}
       </header>
     </div>
