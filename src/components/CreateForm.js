@@ -5,6 +5,7 @@ const CreateForm = ({ onCreate }) => {
     const { register, handleSubmit } = useForm()
 
     const onSubmit = (res) => {
+        console.log(res)
         onCreate(res)
     }
 
@@ -13,14 +14,14 @@ const CreateForm = ({ onCreate }) => {
             <label htmlFor='name' >Name</label>
             <input id='name' {...register('name')} />
             <br/>
-            <label htmlFor='genre' >Genre</label>
-            <input id='genre' {...register('genre')} />
+            <label htmlFor='category' >Category</label>
+            <input id='category' {...register('category')} />
             <br/>
-            <label htmlFor='duration' >Duration</label>
-            <input id='duration' {...register('duration')} />
+            <label htmlFor='price' >Price</label>
+            <input id='price' {...register('price')} />
             <br/>
-            <label htmlFor='date' >Release date</label>
-            <input id='date' type='date' {...register('release_date')} />
+            <label htmlFor='isAvailable' >Is Available</label>
+            <input id='isAvailable' type='checkbox' {...register('isAvailable')} />
             <br/>
             <input type='submit' value='enviar' />
         </form>

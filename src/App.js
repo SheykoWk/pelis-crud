@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import CreateForm from './components/CreateForm';
 import ProductCard from './components/ProductCard';
-import createNewMovie from './services/createNewMovie';
-import deleteMovie from './services/deleteMovie';
+import createNewProduct from './services/createNewProduct';
+import deleteProduct from './services/deleteProduct';
 import getAllProducts from './services/getAllProducts';
 
 function App() {
 
-  const [movies, setMovies] = useState([])
-  const [newMovie, setNewMovie] = useState({})
+  const [products, setProducts] = useState([])
+  const [newProduct, setNewProduct] = useState({})
   const [deleteId, setDeleteId] = useState('')
 
 
@@ -17,35 +17,35 @@ function App() {
     getAllProducts()
       .then((response) => {
         console.log(response.data)
-        setMovies(response.data)
+        setProducts(response.data)
       })
   }, [])
 
 
   useEffect(() => {
-    if(newMovie.name){
-      createNewMovie(newMovie)
+    if(newProduct.name){
+      createNewProduct(newProduct)
         .then((res) => {
           console.log(res.data)
-          setMovies([...movies, res.data])
-          setNewMovie({})
+          setProducts([...products, res.data])
+          setNewProduct({})
         })
     } else {
       console.log('no hay valores para hacer un post')
     }
-  }, [newMovie, movies])
+  }, [newProduct, products])
 
   useEffect(() => {
     if(deleteId){
-      deleteMovie(deleteId)
+      deleteProduct(deleteId)
         .then((response) => {
           console.log(response)
         })
     } 
   }, [deleteId])
 
-  const handlerOnCreateMovie = (event) => {
-    setNewMovie(event)
+  const handlerOnCreateProduct = (event) => {
+    setNewProduct(event)
   }
 
   const handlerOnDelete = (id) => {
@@ -53,12 +53,12 @@ function App() {
     console.log('este es mi id desde la app',id)
   }
 
-  const productList = movies.map((item) => <ProductCard productObj={item} onDelete={handlerOnDelete} key={item.id} />)
+  const productList = products.map((item) => <ProductCard productObj={item} onDelete={handlerOnDelete} key={item.id} />)
 
   return (
     <div className="App">
       <header className="App-header">
-        <CreateForm onCreate={handlerOnCreateMovie} />
+        <CreateForm onCreate={handlerOnCreateProduct} />
         {productList}
       </header>
     </div>
