@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import CreateForm from './components/CreateForm';
-import MovieCard from './components/MovieCard';
+import ProductCard from './components/ProductCard';
 import createNewMovie from './services/createNewMovie';
-import getAllMovies from './services/getAllMovies';
+import deleteMovie from './services/deleteMovie';
+import getAllProducts from './services/getAllProducts';
 
 function App() {
 
   const [movies, setMovies] = useState([])
   const [newMovie, setNewMovie] = useState({})
+  const [deleteId, setDeleteId] = useState('')
+
 
   useEffect(() => {
-    getAllMovies()
+    getAllProducts()
       .then((response) => {
         console.log(response.data)
         setMovies(response.data)
@@ -20,7 +23,7 @@ function App() {
 
 
   useEffect(() => {
-    if(newMovie.name ){
+    if(newMovie.name){
       createNewMovie(newMovie)
         .then((res) => {
           console.log(res.data)
@@ -31,19 +34,32 @@ function App() {
       console.log('no hay valores para hacer un post')
     }
   }, [newMovie, movies])
-  
 
-  const movieList = movies.map((item) => <MovieCard movieObj={item} key={item.id} />)
+  useEffect(() => {
+    if(deleteId){
+      deleteMovie(deleteId)
+        .then((response) => {
+          console.log(response)
+        })
+    } 
+  }, [deleteId])
 
   const handlerOnCreateMovie = (event) => {
     setNewMovie(event)
   }
 
+  const handlerOnDelete = (id) => {
+    setDeleteId(id)
+    console.log('este es mi id desde la app',id)
+  }
+
+  const productList = movies.map((item) => <ProductCard productObj={item} onDelete={handlerOnDelete} key={item.id} />)
+
   return (
     <div className="App">
       <header className="App-header">
         <CreateForm onCreate={handlerOnCreateMovie} />
-        {movieList}
+        {productList}
       </header>
     </div>
   );
