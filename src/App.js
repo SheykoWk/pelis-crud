@@ -38,11 +38,16 @@ function App() {
   useEffect(() => {
     if(deleteId){
       deleteProduct(deleteId)
-        .then((response) => {
-          console.log(response)
+        .then(() => {
+          setProducts(filterProduct(deleteId))
         })
     } 
   }, [deleteId])
+
+  const filterProduct = (id) => {
+    const newArr = products.filter((product) => id !== product.id)
+    return newArr
+  }
 
   const handlerOnCreateProduct = (event) => {
     setNewProduct(event)
