@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import CreateForm from './components/CreateForm';
+import EditForm from './components/EditForm';
 import ProductCard from './components/ProductCard';
 import createNewProduct from './services/createNewProduct';
 import deleteProduct from './services/deleteProduct';
@@ -45,6 +46,10 @@ function App() {
     } 
   }, [deleteId])
 
+  useEffect(() => {
+
+  }, [])
+
   const filterProduct = (id) => {
     const newArr = products.filter((product) => id !== product.id)
     return newArr
@@ -58,13 +63,17 @@ function App() {
     setDeleteId(id)
     console.log('este es mi id desde la app',id)
   }
+  const handlerOnEdit = (obj) => {
+    console.log(obj, 'Este es mi objeto a editar')
+  }
 
-  const productList = products.map((item) => <ProductCard productObj={item} onDelete={handlerOnDelete} key={item.id} />)
+  const productList = products.map((item) => <ProductCard productObj={item} onDelete={handlerOnDelete} onEdit={handlerOnEdit} key={item.id} />)
 
   return (
     <div className="App">
       <header className="App-header">
-      <button onClick={() => setDisplayForm(!displayForm)} >Crear nuevo producto</button>
+        <EditForm />
+        <button onClick={() => setDisplayForm(!displayForm)} >Crear nuevo producto</button>
         {displayForm && <CreateForm onCreate={handlerOnCreateProduct} />}
         {productList}
       </header>
