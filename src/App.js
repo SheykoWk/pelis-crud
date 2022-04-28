@@ -14,6 +14,7 @@ function App() {
   const [deleteId, setDeleteId] = useState('')
   const [displayForm, setDisplayForm] = useState(false)
   const [editDefValues, setEditDefValues] = useState({})
+  const [editFormRes, setEditFormRes] = useState({})
 
   useEffect(() => {
     getAllProducts()
@@ -64,12 +65,15 @@ function App() {
     console.log('este es mi id desde la app',id)
   }
   const handlerOnEdit = (obj) => {
-    console.log(obj, 'Este es mi objeto a editar')
     setEditDefValues(obj)
   }
 
-  const handlerOnEditProduct = () => {
-
+  const handlerOnEditProduct = (data) => {
+    console.log(data, 'Este es mi objeto a editar mandada desde el form')
+    
+    
+    
+    setEditFormRes(data)
   }
 
   const productList = products.map((item) => <ProductCard productObj={item} onDelete={handlerOnDelete} onEdit={handlerOnEdit} key={item.id} />)
@@ -77,7 +81,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <EditForm  defValues={editDefValues} />
+        <EditForm onEdit={handlerOnEditProduct} defValues={editDefValues} />
         <button onClick={() => setDisplayForm(!displayForm)} >Crear nuevo producto</button>
         {displayForm && <CreateForm onCreate={handlerOnCreateProduct} />}
         {productList}

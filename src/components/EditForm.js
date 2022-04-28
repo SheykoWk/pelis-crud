@@ -1,41 +1,67 @@
-import { useForm } from "react-hook-form"
+import { useForm } from "react-hook-form";
 
-const EditForm = ({defValues}) => {
+const EditForm = ({ defValues, onEdit }) => {
+  const { register, handleSubmit } = useForm();
 
-    console.log(defValues)
+  const onSubmit = (res) => {
+    console.log("funciona", res);
+    onEdit(res)
+  };
 
-    const defaultValues = {
-        name: defValues.name,
-        category: defValues.category,
-        price: defValues.price,
-        isAvailable: defValues.isAvailable
-    }
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <label htmlFor="name">Name</label>
+      <input
+        id="name"
+        required={true}
+        defaultValue={defValues.name}
+        {...register("name")}
+      />
+      <br />
+      <label htmlFor="category">Category</label>
+      <input
+        id="category"
+        required={true}
+        defaultValue={defValues.category}
+        {...register("category")}
+      />
+      <br />
+      <label htmlFor="price">Price</label>
+      <input
+        id="price"
+        required={true}
+        defaultValue={defValues.price}
+        {...register("price")}
+      />
+      <br />
+      <label htmlFor="is_available">Is Available</label>
+      <input
+        id="is_available"
+        defaultChecked={defValues.isAvailable}
+        type="checkbox"
+        {...register("isAvailable")}
+      />
+      <br />
+      <input type="submit" value="Editar" />
+    </form>
+  );
+};
 
-    const {register, handleSubmit} = useForm({
-        defaultValues: defaultValues
-    })
-    
-    const onSubmit = () => {
-        console.log('funciona')
-    }
+const objDataBase = {
+  category: "fast food",
+  isAvailable: false,
+  name: "maruchan",
+  price: "18.00",
+};
 
-    return(
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <label htmlFor="name">Name</label>
-            <input id="name"  {...register('name')} />
-            <br/>
-            <label htmlFor="category" >Category</label>
-            <input id="category" {...register('category')} />
-            <br/>
-            <label htmlFor="price" >Price</label>
-            <input id="price" {...register('price')} />
-            <br/>
-            <label htmlFor="is_available" >Is Available</label>
-            <input id="is_available" type='checkbox' {...register('isAvailable')} />
-            <br/>
-            <input type='submit' value='Editar' />
-        </form>
-    )
-}
+const objFormEditWithPut = {
+    category: "fast food",
+    isAvailable: true,
+    name: "maruchan",
+    price: "18.00",
+  };
+  const objFormEditWithPatch = {
+    isAvailable: true,
+  };
 
-export default EditForm
+export default EditForm;
