@@ -1,13 +1,28 @@
 import { useForm } from "react-hook-form"
 
-const EditForm = () => {
+const EditForm = ({defValues}) => {
 
-    const {register, handleSubmit} = useForm()
+    console.log(defValues)
+
+    const defaultValues = {
+        name: defValues.name,
+        category: defValues.category,
+        price: defValues.price,
+        isAvailable: defValues.isAvailable
+    }
+
+    const {register, handleSubmit} = useForm({
+        defaultValues: defaultValues
+    })
+    
+    const onSubmit = () => {
+        console.log('funciona')
+    }
 
     return(
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <label htmlFor="name">Name</label>
-            <input id="name" {...register('name')} />
+            <input id="name"  {...register('name')} />
             <br/>
             <label htmlFor="category" >Category</label>
             <input id="category" {...register('category')} />
