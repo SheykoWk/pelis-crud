@@ -11,6 +11,7 @@ function App() {
   const [products, setProducts] = useState([])
   const [newProduct, setNewProduct] = useState({})
   const [deleteId, setDeleteId] = useState('')
+  const [displayForm, setDisplayForm] = useState(false)
 
 
   useEffect(() => {
@@ -63,7 +64,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <CreateForm onCreate={handlerOnCreateProduct} />
+      <button onClick={() => setDisplayForm(!displayForm)} >Crear nuevo producto</button>
+        {displayForm && <CreateForm onCreate={handlerOnCreateProduct} />}
         {productList}
       </header>
     </div>
