@@ -1,11 +1,26 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const EditForm = ({ defValues, onEdit }) => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
+
+  const emptyValues = {
+    category: "",
+    isAvailable: false,
+    name: "",
+    price: ""
+  }
+
+  useEffect(() => {
+    if(defValues){
+      reset(defValues)
+    }
+  }, [reset, defValues])
 
   const onSubmit = (res) => {
     console.log("funciona", res);
     onEdit(res)
+    reset(emptyValues)
   };
 
   return (
@@ -14,7 +29,6 @@ const EditForm = ({ defValues, onEdit }) => {
       <input
         id="name"
         required={true}
-        defaultValue={defValues.name}
         {...register("name")}
       />
       <br />
@@ -22,7 +36,6 @@ const EditForm = ({ defValues, onEdit }) => {
       <input
         id="category"
         required={true}
-        defaultValue={defValues.category}
         {...register("category")}
       />
       <br />
@@ -30,14 +43,12 @@ const EditForm = ({ defValues, onEdit }) => {
       <input
         id="price"
         required={true}
-        defaultValue={defValues.price}
         {...register("price")}
       />
       <br />
       <label htmlFor="is_available">Is Available</label>
       <input
         id="is_available"
-        defaultChecked={defValues.isAvailable}
         type="checkbox"
         {...register("isAvailable")}
       />

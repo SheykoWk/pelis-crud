@@ -69,10 +69,12 @@ function App() {
   }
 
   const handlerOnEditProduct = (data) => {
-    console.log(data, 'Este es mi objeto a editar mandada desde el form')
+    const arr = Object.entries(data)
+    const newArr = arr.filter(item => item[1] !== '')
+
     
-    
-    
+
+
     setEditFormRes(data)
   }
 
