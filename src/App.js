@@ -5,6 +5,7 @@ import EditForm from './components/EditForm';
 import ProductCard from './components/ProductCard';
 import createNewProduct from './services/createNewProduct';
 import deleteProduct from './services/deleteProduct';
+import editProduct from './services/editProduct';
 import getAllProducts from './services/getAllProducts';
 
 function App() {
@@ -39,17 +40,32 @@ function App() {
   }, [newProduct, products])
 
   useEffect(() => {
+    const filterProduct = (id) => {
+      const newArr = products.filter((product) => id !== product.id)
+      return newArr
+    }
     if(deleteId){
       deleteProduct(deleteId)
         .then(() => {
           setProducts(filterProduct(deleteId))
         })
     } 
-  }, [deleteId])
+  }, [deleteId, products])
 
   useEffect(() => {
-
-  }, [])
+    const filterProduct = (id) => {
+      const newArr = products.filter((product) => id !== product.id)
+      return newArr
+    }
+    if(editFormRes.id){
+      editProduct(editFormRes.id, editFormRes)
+        .then((res) => {
+          console.log(res.data)
+          setProducts([res.data, ...filterProduct(editFormRes.id)])
+          setEditFormRes({})
+        })
+    }
+  }, [editFormRes, products])
 
   const filterProduct = (id) => {
     const newArr = products.filter((product) => id !== product.id)
@@ -69,12 +85,6 @@ function App() {
   }
 
   const handlerOnEditProduct = (data) => {
-    const arr = Object.entries(data)
-    const newArr = arr.filter(item => item[1] !== '')
-
-    
-
-
     setEditFormRes(data)
   }
 
